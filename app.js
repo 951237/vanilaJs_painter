@@ -56,5 +56,5 @@ if (canvas) {
     canvas.addEventListener("mouseleave", stopPainting);
 }
 
-// 컬러를 배열에 담기, 구문 찾아보기 array foreach 구문
+// 컬러를 배열에 담기, 구문 찾아보기 array foreach 구문 찾아보기
 Array.from(colors).forEach(colors => colors.addEventListener("click", handleColorClick))
