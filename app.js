@@ -1,5 +1,6 @@
 const canvas = document.getElementById("jsCanvas"); // html에서 캔버스 개체 가져오기
 const ctx = canvas.getContext("2d"); // canvas 
+const colors = document.getElementsByClassName("jsColor");
 
 // 그림을 그릴수 있는 캔버스 크기를 js에서도 설정
 canvas.width = 700;
@@ -20,11 +21,11 @@ function onMouseMove(event) {
     const x = event.offsetX;
     const y = event.offsetY;
     if (!painting) { // 그리기모드가 아닐때
-        console.log("creating path in ", x, y);
+        // console.log("creating path in ", x, y);
         ctx.beginPath(); // 움질일때 패스가 만들어짐
         ctx.moveTo(x, y); // 좌표를 움직임
     } else { // 그리기 모드가 활성화 될때
-        console.log("creating line in ", x, y);
+        // console.log("creating line in ", x, y);
         ctx.lineTo(x, y);
         ctx.stroke();
     }
@@ -41,9 +42,19 @@ function onMouseDown(event) {
     // console.log(event)
 }
 
+function handleColorClick(event) {
+    // 마우스로 클릭한 개체의 배경색 가져오기 컬러피커??
+    const color = event.target.style.backgroundColor;
+    ctx.strokeStyle = color; // 선색깔을 바꾸기
+    console.log(color);
+}
+
 if (canvas) {
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", onMouseDown);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
 }
+
+// 컬러를 배열에 담기, 구문 찾아보기 array foreach 구문
+Array.from(colors).forEach(colors => colors.addEventListener("click", handleColorClick))
