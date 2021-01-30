@@ -1,6 +1,8 @@
 const canvas = document.getElementById("jsCanvas"); // html에서 캔버스 개체 가져오기
 const ctx = canvas.getContext("2d"); // canvas 
 const colors = document.getElementsByClassName("jsColor");
+const range = document.getElementById("jsRange");
+const mode = document.getElementById("jsMode");
 
 // 그림을 그릴수 있는 캔버스 크기를 js에서도 설정
 canvas.width = 700;
@@ -10,6 +12,7 @@ ctx.strokStyle = "#2c2c2c"; // 선의 기본 색깔 검은색
 ctx.lineWidth = 2.5; // 선의 굵기 지정
 
 let painting = false; //그리기 모드 중지
+let filling = false; // 채우기 모드 중지
 
 // 그리기 모드 중지
 function stopPainting() {
@@ -49,6 +52,22 @@ function handleColorClick(event) {
     console.log(color);
 }
 
+function handleRangeChange(event) {
+    // console.log(event.target.value)
+    const size = event.target.value
+    ctx.lineWidth = size;
+}
+
+function handleModeClick() {
+    if (filling === true) {
+        filling = false;
+        mode.innerText = "Fill"
+    } else {
+        filling = true;
+        mode.innerText = "Paint"
+    }
+}
+
 if (canvas) {
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", onMouseDown);
@@ -57,4 +76,14 @@ if (canvas) {
 }
 
 // 컬러를 배열에 담기, 구문 찾아보기 array foreach 구문 찾아보기
-Array.from(colors).forEach(colors => colors.addEventListener("click", handleColorClick))
+if (colors) {
+    Array.from(colors).forEach(colors => colors.addEventListener("click", handleColorClick));
+}
+
+if (range) {
+    range.addEventListener("input", handleRangeChange)
+}
+
+if (mode) {
+    mode.addEventListener("click", handleModeClick);
+}
